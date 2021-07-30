@@ -1,6 +1,7 @@
 from socketserver import StreamRequestHandler
 
 class SpartanRequestDispatcher(StreamRequestHandler):
+	"""Base request handler class for Spartan requests. To implement custom behavior, use SpartanRequestDispatcher.handle_request."""
 	def handle(self):
 		"""Handles incoming connections. To handle Spartan requests, see SpartanRequestDispatcher.handle_request."""
 		try:
