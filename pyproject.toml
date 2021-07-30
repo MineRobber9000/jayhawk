@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "jayhawk"
-version = "1.0.0"
+version = "1.0.1"
 description = "An extensible server for the Spartan protocol."
 repository = "https://github.com/MineRobber9000/jayhawk"
 readme = "README.md"
