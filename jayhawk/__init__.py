@@ -5,8 +5,7 @@ from threading import Event
 
 def on_interrupt(signum, frame):
 	"""Signal handler. Stops all servers."""
-	print("on_interrupt")
-	for server in servers: server.__shutdown_request = True
+	for server in servers: server._BaseServer__shutdown_request = True
 
 def install_signal_handler():
 	"""Installs on_interrupt as the SIGINT handler."""
@@ -24,10 +23,10 @@ def serve(handler,server_address=("0.0.0.0",300),server_cls=ThreadingTCPServer,t
 	if ret:
 		# For convenience sake, monkey-patch in a non-blocking shutdown() and add a join() method for if you need it.
 		def __shutdown():
-			server.__shutdown_request=True
+			server._BaseServer__shutdown_request=True
 		server.shutdown = __shutdown
 		def __join():
-			server.__is_shut_down.wait()
+			server._BaseServer__is_shut_down.wait()
 		server.join = __join
 		return server
 	else:
