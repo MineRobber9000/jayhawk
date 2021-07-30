@@ -33,7 +33,7 @@ def serve(handler,server_address=("0.0.0.0",300),server_cls=ThreadingTCPServer,t
 	else:
 		server.serve_forever()
 
-def serve_directory(dir,server_address=("0.0.0.0",300),server_cls=ThreadedTCPServer,timeout_interval=0.5,ret=False):
+def serve_directory(dir,server_address=("0.0.0.0",300),server_cls=ThreadingTCPServer,timeout_interval=0.5,ret=False):
 	"""Convenience function. Makes a subclass of FileBasedSpartanHandler with the root attribute set to dir, and passes it to serve."""
 	handler = type("DirectoryServer",(FileBasedSpartanHandler,),{"root":dir})
 	return serve(handler,server_address,server_cls,timeout_interval,ret)
