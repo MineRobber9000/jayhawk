@@ -1,24 +1,21 @@
 from jayhawk.dispatch import *
-from socketserver import ThreadingMixIn, TCPServer
+from socketserver import ThreadingTCPServer
 from signal import signal, SIGINT
 from threading import Event
 
 def on_interrupt(signum, frame):
 	"""Signal handler. Stops all servers."""
+	print("on_interrupt")
 	for server in servers: server.__shutdown_request = True
 
 def install_signal_handler():
 	"""Installs on_interrupt as the SIGINT handler."""
 	signal(SIGINT,on_interrupt)
 
-class ThreadedTCPServer(ThreadingMixIn, TCPServer):
-	"""TCPServer with ThreadingMixIn. Used as the default server class for serve and serve_directory."""
-	pass
-
 # A list of servers that on_interrupt is responsible for.
 servers = set()
 
-def serve(handler,server_address=("0.0.0.0",300),server_cls=ThreadedTCPServer,timeout_interval=0.5,ret=False):
+def serve(handler,server_address=("0.0.0.0",300),server_cls=ThreadingTCPServer,timeout_interval=0.5,ret=False):
 	"""Serves SpartanRequestDispatcher subclass handler at server_address, using server_cls with a timeout of timeout_interval.
            If you want to handle the running of the server yourself, pass ret=True."""
 	server = server_cls(server_address,handler)
